@@ -402,12 +402,25 @@ if(!isset($_SESSION['session_id']) || empty($_SESSION['session_id'])) {
   <div class="modal fade" tabindex="-1" role="dialog" id="editMemberModal">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
+       <form class="form-horizontal" action="php_action/update.php" method="POST" id="updateMemberForm">     
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><span class="glyphicon glyphicon-edit"></span> Edit Member</h4>
+         
+      
+    <div class="row">
+        <div class="col-md-4 pull-right">
+<div class="row">
+<div class="col-md-3 text-center">
+<strong>BOOKING DATE</strong>
+</div>
+<div class="col-md-9">
+            <input type="date" name="BOOKING_DATE" id="BOOKING_DATE" title="BOOKING DATE (You can change this if you want to edit booking date)" class="form-control"/>
+        </div>
+    </div>
+    </div>
+    </div>
         </div>
 
-    <form class="form-horizontal" action="php_action/update.php" method="POST" id="updateMemberForm">       
+     
 
     <div class="modal-body">
         <div class="edit-messages"></div>
@@ -661,7 +674,7 @@ while($row = mysqli_fetch_array($employee_query))
   </div>
           </div>
           <div class="col-sm-4">
-  <label for="editAddress" class="control-label">COD Payment ( IF COD )<font style="color:red;font-size:11px;">(IF PAYMENT TYPE IS COD )</font></label>
+  <label for="editAddress" class="control-label">COD Payment <font style="color:red;font-size:11px;">(IF PAYMENT TYPE IS COD )</font></label>
          <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-money"></i></span>
   <input type="number" min="0" class="form-control" placeholder="COD Payment" id="BOOKING_CODPAYMENT" name="BOOKING_CODPAYMENT">

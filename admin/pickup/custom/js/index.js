@@ -226,6 +226,7 @@ function editMember(id = null) {
 				$("#BOOKING_CODPAYMENT").val(response.BOOKING_CODPAYMENT);
 				$("#BOOKING_DELIVERYDATE").val(response.BOOKING_DELIVERYDATE);
 				$("#BOOKING_DESCRIPTION").val(response.BOOKING_DESCRIPTION);
+				$("#BOOKING_DATE").val(response.BOOKING_DATE);
 				// mmeber id 
 				$(".editMemberModal").append('<input type="hidden" name="BOOKING_ID" id="BOOKING_ID" value="'+response.BOOKING_ID+'"/>');
 
@@ -261,7 +262,7 @@ function editMember(id = null) {
 					var BOOKING_CODPAYMENT = $("#BOOKING_CODPAYMENT").val();
 					var BOOKING_DELIVERYDATE = $("#BOOKING_DELIVERYDATE").val();
 					var BOOKING_PAYMENT = $("#BOOKING_PAYMENT").val();
-
+					var BOOKING_DATE = $("#BOOKING_DATE").val();
 					if(BOOKING_PSENDER == "") {
 						$("#BOOKING_PSENDER").closest('.input-group').addClass('has-error');
 						
