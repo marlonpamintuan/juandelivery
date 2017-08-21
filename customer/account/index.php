@@ -10,6 +10,7 @@ $query = mysqli_query($link,"select * from user where USER_ID='$SESSION_ID'");
 $row = mysqli_fetch_array($query);
 $USER_FIRSTNAME = $row['USER_FIRSTNAME'];
 $USER_LASTNAME = $row['USER_LASTNAME'];
+$USER_IMAGE = $row['USER_IMAGE'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,14 +97,14 @@ $USER_LASTNAME = $row['USER_LASTNAME'];
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img src="../../admin/dist/img/avatar5.png" class="user-image" alt="User Image">
+                <img src="image/<?php echo $USER_IMAGE?>" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs"><?php echo strtoupper($USER_FIRSTNAME.' '.$USER_LASTNAME);?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                  <img src="../../admin/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                  <img src="image/<?php echo $USER_IMAGE?>" class="img-circle" alt="User Image">
 
                   <p>
                 <?php echo strtoupper($USER_FIRSTNAME.' '.$USER_LASTNAME);?>
@@ -115,7 +116,9 @@ $USER_LASTNAME = $row['USER_LASTNAME'];
              
                 <!-- Menu Footer-->
                 <li class="user-footer">
-             
+             <div class="pull-left">
+                    <a href="profile/" class="btn btn-default btn-flat">Profile</a>
+                  </div>
                   <div class="pull-right">
                     <a href="../../basefunction/logout.php" class="btn btn-default btn-flat">Sign out</a>
                   </div>

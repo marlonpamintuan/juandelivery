@@ -6,11 +6,15 @@ if(!isset($_SESSION['session_id']) || empty($_SESSION['session_id'])) {
     exit();
   }
 $SESSION_ID = $_SESSION['session_id'];
-$query = mysqli_query($link,"select * from user where USER_ID='$SESSION_ID'");
+$query = mysqli_query($link,"select * from user inner join security ON user.USER_ID=security.USER_ID where user.USER_ID='$SESSION_ID'");
 $row = mysqli_fetch_array($query);
 $USER_FIRSTNAME = $row['USER_FIRSTNAME'];
 $USER_LASTNAME = $row['USER_LASTNAME'];
+$USER_EMAIL = $row['USER_EMAIL'];
+$USER_CONTACTNUMBER = $row['USER_CONTACTNUMBER'];
+$SECURITY_USERNAME = $row['SECURITY_USERNAME'];
 $USER_IMAGE = $row['USER_IMAGE'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,26 +25,23 @@ $USER_IMAGE = $row['USER_IMAGE'];
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" type="text/css" href="assests/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../admin/bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../admin/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../../admin/ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../../admin/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../../admin/dist/css/skins/_all-skins.min.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- datatables css -->
-  <link rel="stylesheet" type="text/css" href="assests/datatables/dataTables.bootstrap.css">
+  <script src="../../../asset/js/sweetalert-dev.js"></script>
+  <link rel="stylesheet" href="../../../asset/css/sweetalert.css">
+<style>
+input[type=file] {
+  background: whitesmoke;
+}
+</style>
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
@@ -106,7 +107,7 @@ $USER_IMAGE = $row['USER_IMAGE'];
                 <!-- Menu Footer-->
                 <li class="user-footer">
                  <div class="pull-left">
-                    <a href="../profile/" class="btn btn-default btn-flat">Profile</a>
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
                     <a href="../../../basefunction/logout.php" class="btn btn-default btn-flat">Sign out</a>
@@ -133,76 +134,128 @@ $USER_IMAGE = $row['USER_IMAGE'];
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Customer</a></li>
           <li><a href="#">Account</a></li>
-          <li class="active">Message</li>
+          <li class="active">Profile</li>
         </ol>
       </section>
 
       <!-- Main content -->
       <section class="content">
 <!-- add modal -->
-  <!-- edit modal -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="addMember">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-        </div>
-
-    <form class="form-horizontal" action="php_action/create.php" method="POST" id="createMemberForm">       
-
-    <div class="modal-body">
-        <div class="messages"></div>
-        <div class="row">
-          <div class="col-md-12"> 
- 
-         <div class="input-group">
-  <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-  <input type="hidden" value="<?php echo $SESSION_ID;?>" name="userid"/>
-  <textarea class="form-control" onclick="reloadChat()" id="MESSAGE_MESSAGE" name="MESSAGE_MESSAGE" placeholder="Anything you want to say"></textarea>
-  </div>
-
-        <!-- here the text will apper  -->
-  </div>
-</div>
-      
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Send Message</button>
-        </div>
-        </form>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  
 
       <!-- /.row -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Your Conversation with our Admin</h3>
-             <h3 class="box-title pull-right">
-              <button class="btn btn-primary pull pull-right" data-toggle="modal" data-target="#addMember" id="addMemberModalBtn">
-          <span class="fa fa-edit "></span> <strong>Create New Message</strong>
-        </button>
-          </h3>
+          
+             <div class="box-title">
+             <form id="icon_form" method="POST" action="php/icon.php" enctype="multipart/form-data">
+             <font style="font-size:14px;"><strong>Change Profile Icon</strong></font>
+          <div class="btn-group">
+                  <input type="file" id="file" class="btn btn-sm" name="fileToUpload" required="" />
+                  <input type="hidden" name="SESSION_ID" value="<?php echo $SESSION_ID;?>"/>
+              <input type="submit" name="submit" class="btn btn-success" value="Save"/>
+           </div>
+    </form>
+        <div id='loadingmessage3' style='display:none;' class="text-left">
+  <img src='loading.gif' style="width:5%;"/><br>
+ 
+</div>
+          </div> 
           </div>
           <div class="box-body">
          <div class="row">
       <div class="col-md-12">
-        <div id="seen"></div>
 
-        <table class="table table-hover table-striped" id="manageMemberTable">          
-          <thead>
-            <tr>
-           
-              <th class="bg-warning" style="width:20%">FROM</th>
-              <th class="bg-warning">MESSAGE</th>
-              <th class="bg-warning" style="width:20%">DATE</th>
-             
-            </tr>
-          </thead>
-        </table>
+
+     <div class="row">
+  <div class="col-md-6">
+
+<h3>PERSONAL INFORMATION</h3>
+  <div class="well" style="background: none;">
+  <form id="personal_form" method="POST">
+<div class="row">
+<div class="col-md-6">
+<label>First Name</label>
+<input type="text" name="USER_FIRSTNAME" id="USER_FIRSTNAME" value="<?php echo $USER_FIRSTNAME;?>" placeholder="First Name" class="form-control" disabled/>
+
+</div>
+<div class="col-md-6">
+<label>Last Name</label>
+<input type="text" name="USER_LASTNAME" id="USER_LASTNAME" value="<?php echo $USER_LASTNAME;?>" placeholder="Last Name" class="form-control" disabled/>
+
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-6">
+<label>Contact Number</label>
+<input type="number" name="USER_CONTACTNUMBER" id="USER_CONTACTNUMBER" value="<?php echo $USER_CONTACTNUMBER;?>" placeholder="Contact Number" class="form-control" required/>
+<input type="hidden" name="SESSION_ID" value="<?php echo $SESSION_ID;?>"/>
+</div>
+<div class="col-md-6">
+<label>Email Address</label>
+<input type="email" name="USER_EMAIL" id="USER_EMAIL" value="<?php echo $USER_EMAIL;?>" placeholder="Email Address" class="form-control" required/>
+
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-12 text-right">
+<input type="submit" class="btn btn-success" value="Save Changes"/>
+</div>
+</div>
+</form>
+     <div id='loadingmessage' style='display:none;' class="text-center">
+  <img src='loading.gif' style="width:12%;"/><br>
+ 
+</div>
+</div>
+
+  </div>
+
+  <!--#######-->
+  <div class="col-md-6">
+
+<h3>ACCOUNT INFORMATION</h3>
+  <div class="well" style="background: none;">
+   <form id="account_form" method="POST">
+<div class="row">
+<div class="col-md-12">
+<label>Username</label>
+<input type="text" name="USER_USERNAME" id="USER_USERNAME" value="<?php echo $SECURITY_USERNAME;?>" placeholder="Username" class="form-control"/>
+<input type="hidden" name="SESSION_ID" value="<?php echo $SESSION_ID;?>"/>
+</div>
+
+</div>
+<br>
+<div class="row">
+<div class="col-md-6">
+<label>Current Password</label>
+<input type="password" name="USER_PASSWORD" id="USER_PASSWORD" placeholder="Current Password" class="form-control" required="" />
+
+</div>
+<div class="col-md-6">
+<label>New Password</label>
+<input type="password" name="USER_NEWPASSWORD" id="USER_NEWPASSWORD" placeholder="New Password" class="form-control" required="" />
+
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-12 text-right">
+<input type="submit" class="btn btn-success" value="Save Changes"/>
+</div>
+</div>
+</form>
+    <div id='loadingmessage2' style='display:none;' class="text-center">
+  <img src='loading.gif' style="width:12%;"/><br>
+ 
+</div>
+</div>
+  </div>
+  <!--####-->
+   </div>
+
+
       </div>
     </div>
           </div>
@@ -236,6 +289,12 @@ $USER_IMAGE = $row['USER_IMAGE'];
 
 <!-- jQuery 2.2.3 -->
 <script src="../../../admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!--SCRIPT FOR PERSONAL INFO-->
+<script src="js/ajax.js"></script>
+<!--SCRIPT FOR PERSONAL INFO-->
+<!--SCRIPT FOR ACCOUNT INFO-->
+<script src="js/ajax2.js"></script>
+<!--SCRIPT FOR ACCOUNT INFO-->
 <!-- Bootstrap 3.3.6 -->
 <script src="../../../admin/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -268,5 +327,6 @@ $('#notif').load('../php/notif.php');
 
 
 </script>
+
 </body>
 </html>
