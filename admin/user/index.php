@@ -264,6 +264,8 @@ th{
           <thead>
             <tr>
              <th class="bg-primary"></th>
+
+             <th class="bg-primary" style="width: 50px;">User Image</th>
               <th class="bg-primary">First Name</th>
                <th class="bg-primary">Last Name</th>          
               <th class="bg-primary">Contact Number</th>

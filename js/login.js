@@ -35,7 +35,7 @@ $(document).ready(function() {
               $('#loadingmessage').hide();
 		  username=$("#SECURITY_USERNAME").val("");
           password=$("#SECURITY_PASSWORD").val("");
-           $("#result").html("<div id='danger-alert2' class='alert alert-danger text-center alert-dismissable text-center' style='font-family:arial;'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> <b><span class='fa fa-exclamation-circle'></span>&nbsp;&nbsp;Sorry, Something went wrong. </b></div></div>");
+           $("#result").html(data);
 		  
 			$("#danger-alert2").alert();
                 $("#danger-alert2").fadeTo(1500, 500).slideUp(500, function(){

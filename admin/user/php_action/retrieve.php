@@ -22,9 +22,10 @@ while ($row = $query->fetch_assoc()) {
 	  </ul>
 	</div>
 		';
-
+$s = '<img src="../../customer/account/image/'.$row["USER_IMAGE"].'" class="img img-responsive"></img>';
 	$output['data'][] = array(
 		$actionButton,
+		$s,
 		$row['USER_FIRSTNAME'],
 		$row['USER_LASTNAME'],
 		$row['USER_CONTACTNUMBER'],
