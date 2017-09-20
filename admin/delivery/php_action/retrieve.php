@@ -18,7 +18,8 @@ while ($row = $query->fetch_assoc()) {
 	      	    <li><a type="button" href="" data-toggle="modal" data-target="#editMemberModal" onclick="editMember('.$row['BOOKING_ID'].')"> <span class="glyphicon glyphicon-edit text-info"></span> View / Edit</a></li>
 	      	        <li><a type="button" href="" data-toggle="modal" data-target="#doneModal" onclick="done('.$row['BOOKING_ID'].')"> <span class="glyphicon glyphicon-check text-success"></span> Set as Done</a></li>
 	      	        <li><a type="button" href="waybill.php?id='.$row['BOOKING_ID'].'"> <span class="fa fa-file text-info"></span> Print copy of waybill</a></li>
-	    <li><a type="button" href="" data-toggle="modal" data-target="#removeMemberModal" onclick="removeMember('.$row['BOOKING_ID'].')"> <span class="glyphicon glyphicon-trash text-danger"></span> Cancel</a></li>	    
+	    <li><a type="button" href="" data-toggle="modal" data-target="#removeMemberModal" onclick="removeMember('.$row['BOOKING_ID'].')"> <span class="fa fa-times text-danger"></span> Cancel</a></li>
+	        <li><a type="button" href="" data-toggle="modal" data-target="#deleteMemberModal" onclick="deleteMember('.$row['BOOKING_ID'].')"> <span class="glyphicon glyphicon-trash text-danger"></span> Delete Permanently</a></li>		    
 	 
 	  </ul>
 	</div>

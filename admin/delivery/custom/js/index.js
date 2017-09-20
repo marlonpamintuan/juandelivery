@@ -146,7 +146,49 @@ function removeMember(id = null) {
 		alert('Error: Refresh the page again');
 	}
 }
+function deleteMember(id = null) {
+	if(id) {
+		// click on remove button
+		$("#deleteBtn").unbind('click').bind('click', function() {
+			$.ajax({
+				url: 'php_action/delete.php',
+				type: 'post',
+				data: {BOOKING_ID : id},
+				dataType: 'json',
+				success:function(response) {
+					if(response.success == true) {						
+						$(".deleteMessages").html('<div id="success-delete" class="alert alert-success alert-dismissible" role="alert">'+
+							  '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							  '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+
+							'</div>');
+							  $("#success-delete").fadeTo(1500, 500).slideUp(500, function(){
+                $("#success-delete").slideUp(500);
+				
+                });  
 
+						// refresh the table
+						manageMemberTable.ajax.reload(null, false);
+
+						// close the modal
+						$("#deleteMemberModal").modal('hide');
+
+					} else {
+						$(".deleteMessages").html('<div id="warning-delete" class="alert alert-warning alert-dismissible" role="alert">'+
+							  '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							  '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
+							'</div>');
+							  $("#warning-delete").fadeTo(1500, 500).slideUp(500, function(){
+                $("#warning-delete").slideUp(500);
+				
+                });  
+					}
+				}
+			});
+		}); // click remove btn
+	} else {
+		alert('Error: Refresh the page again');
+	}
+}
 
 function done(id = null) {
 	if(id) {

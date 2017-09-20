@@ -358,6 +358,7 @@ th{
             <div class="row">
       <div class="col-md-12">
         <div class="removeMessages"></div>
+           <div class="deleteMessages"></div>
  <div class="pickupMessages"></div>
  <div class="doneMessages"></div>
 
@@ -386,7 +387,24 @@ th{
       </div>
     </div>
  
-
+<!-- delete modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="deleteMemberModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><span class="glyphicon glyphicon-trash"></span> Delete Transaction</h4>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete this?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="deleteBtn">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
   <!-- remove modal -->
   <div class="modal fade" tabindex="-1" role="dialog" id="removeMemberModal">
     <div class="modal-dialog" role="document">
